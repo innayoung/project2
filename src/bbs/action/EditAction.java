@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-import mybatis.dao.BbsDAO;
+import mybatis.dao.BbsDAO2;
+import mybatis.dao.ListDAO;
 import mybatis.vo.BbsVO;
 
 public class EditAction implements Action {
@@ -17,20 +18,20 @@ public class EditAction implements Action {
 	@Override
 	public String execute(HttpServletRequest request, 
 			HttpServletResponse response) {
-		// ¿äÃ»ÇÑ contentTypeÀ» ¾ò¾î³½´Ù.
+		// ìš”ì²­í•œ contentTypeì„ ì–»ì–´ë‚¸ë‹¤.
 		String c_type = request.getContentType();
 		String viewPath = null;
 		
 		if(c_type.startsWith("application")) {
-			//POST¹æ½ÄÀ¸·Î ¿äÃ»µÈ °æ¿ì!
+			//POSTë°©ì‹ìœ¼ë¡œ ìš”ì²­ëœ ê²½ìš°!
 			String b_idx = request.getParameter("b_idx");
-			BbsVO vo = BbsDAO.get_bbs(b_idx);
+			BbsVO vo = BbsDAO2.get_bbs(b_idx);
 			if(vo != null)
 				request.setAttribute("vo", vo);
 			
 			viewPath = "/edit.jsp";
 		}else if(c_type.startsWith("multipart/")) {
-			// Ã·ºÎÆÄÀÏÀ» ÀúÀåÇÒ À§Ä¡¸¦ Àı´ë°æ·ÎÈ­ ½ÃÅ²´Ù.
+			// ì²¨ë¶€íŒŒì¼ì„ ì €ì¥í•  ìœ„ì¹˜ë¥¼ ì ˆëŒ€ê²½ë¡œí™” ì‹œí‚¨ë‹¤.
 			ServletContext application = request.getServletContext();
 			
 			try {
@@ -39,9 +40,9 @@ public class EditAction implements Action {
 				MultipartRequest mr = new MultipartRequest(
 					request, path, 1024*1024*5, "utf-8",
 					new DefaultFileRenamePolicy());
-				// ÀÌ¶§ Ã·ºÎÆÄÀÏÀÌ ¾÷·Îµµ µÈ´Ù.
+				// ì´ë•Œ ì²¨ë¶€íŒŒì¼ì´ ì—…ë¡œë„ ëœë‹¤.
 				
-				//³ª¸ÓÁö ÆÄ¶ó¹ÌÅÍµé ¹Ş±â
+				//ë‚˜ë¨¸ì§€ íŒŒë¼ë¯¸í„°ë“¤ ë°›ê¸°
 				String b_idx = mr.getParameter("b_idx");
 				String cPage = mr.getParameter("cPage");
 				String title = mr.getParameter("title");
@@ -49,7 +50,7 @@ public class EditAction implements Action {
 				String content = mr.getParameter("content");
 				String pwd = mr.getParameter("pwd");
 				
-				//Ã·ºÎÆÄÀÏÀÇ ÀÌ¸§À» È®ÀÎÇÏ±â À§ÇØ File°´Ã¼ ¾ò±â
+				//ì²¨ë¶€íŒŒì¼ì˜ ì´ë¦„ì„ í™•ì¸í•˜ê¸° ìœ„í•´ Fileê°ì²´ ì–»ê¸°
 				File f = mr.getFile("file");
 				
 				String fname = "";
@@ -61,7 +62,7 @@ public class EditAction implements Action {
 				
 				String ip = request.getRemoteAddr();
 				
-				BbsDAO.edit_bbs(b_idx, title, writer, 
+				BbsDAO2.edit_bbs(b_idx, title, writer, 
 					content, fname, oname, ip, pwd);
 				
 				viewPath = "control?type=view&cPage="+cPage+

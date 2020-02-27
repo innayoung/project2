@@ -3,7 +3,7 @@ package bbs.action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import mybatis.dao.BbsDAO;
+import mybatis.dao.MemDAO;
 import mybatis.vo.MemVO;
 
 public class checkIdAction implements Action {
@@ -13,7 +13,7 @@ public class checkIdAction implements Action {
 		
 		String id = request.getParameter("id");
 		
-		MemVO vo = BbsDAO.get_member(id);
+		MemVO vo = MemDAO.get_member(id);
 		
 		request.setAttribute("vo", vo);
 		

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import mybatis.dao.BbsDAO;
+import mybatis.dao.BbsDAO2;
 import mybatis.vo.BbsVO;
 
 public class viewBbsAction implements Action {
@@ -15,13 +15,13 @@ public class viewBbsAction implements Action {
 	@Override
 	public String execute(HttpServletRequest request, 
 			HttpServletResponse response) {
-		// ÆÄ¶ó¹ÌÅÍ °ª ¹Ş±â
+		// íŒŒë¼ë¯¸í„° ê°’ ë°›ê¸°
 		String cPage = request.getParameter("cPage");
 		String b_idx = request.getParameter("b_idx");
 		
-		//cPage´Â ´Ù½Ã ¸ñ·ÏÈ­¸éÀ¸·Î µ¹¾Æ°¥ ¶§ ÇÊ¿äÇÏ¸ç, b_idx´Â
-		// Ç¥ÇöÇÒ °Ô½Ã¹° Á¤º¸(BbsVO)¸¦ ¾ò±â À§ÇØ ÇÊ¿äÇÏ´Ù.
-		BbsVO vo = BbsDAO.get_bbs(b_idx);
+		//cPageëŠ” ë‹¤ì‹œ ëª©ë¡í™”ë©´ìœ¼ë¡œ ëŒì•„ê°ˆ ë•Œ í•„ìš”í•˜ë©°, b_idxëŠ”
+		// í‘œí˜„í•  ê²Œì‹œë¬¼ ì •ë³´(BbsVO)ë¥¼ ì–»ê¸° ìœ„í•´ í•„ìš”í•˜ë‹¤.
+		BbsVO vo = BbsDAO2.get_bbs(b_idx);
 		
 		HttpSession session = request.getSession();
 		
@@ -37,7 +37,7 @@ public class viewBbsAction implements Action {
 			}else{
 				list = (List<BbsVO>)obj;
 				
-				//voÀÇ b_idx¿Í list¿¡ ÀÖ´Â °¢ BbsVOÀÇ b_idx¸¦ ºñ±³
+				//voì˜ b_idxì™€ listì— ìˆëŠ” ê° BbsVOì˜ b_idxë¥¼ ë¹„êµ
 				for(BbsVO r_vo : list){
 					if(b_idx.equals(r_vo.getB_idx())){
 						chk = true;
@@ -47,22 +47,22 @@ public class viewBbsAction implements Action {
 			}
 			
 			if(!chk){
-				//ÀÏ´Ü Çö °Ô½Ã¹°ÀÇ Á¶È¸¼ö °ªÀ» °¡Á®¿Â´Ù.
+				//ì¼ë‹¨ í˜„ ê²Œì‹œë¬¼ì˜ ì¡°íšŒìˆ˜ ê°’ì„ ê°€ì ¸ì˜¨ë‹¤.
 				int hit = Integer.parseInt(vo.getHit());
 				++hit;
 				
 				vo.setHit(String.valueOf(hit)); 
 				
-				// ¿©±â±îÁö´Â vo°¡ °¡Áö°í ÀÖ´Â hit°ªÀ» º¯°æÇßÁö¸¸
-				// DB¿¡´Â º¯°æµÇÁö ¾Ê¾Ò´Ù.
-				BbsDAO.add_hit(b_idx);
+				// ì—¬ê¸°ê¹Œì§€ëŠ” voê°€ ê°€ì§€ê³  ìˆëŠ” hitê°’ì„ ë³€ê²½í–ˆì§€ë§Œ
+				// DBì—ëŠ” ë³€ê²½ë˜ì§€ ì•Šì•˜ë‹¤.
+				BbsDAO2.add_hit(b_idx);
 				
-				//ÀĞÀº °Ô½Ã¹°·Î Ã³¸®ÇÏ±â À§ÇØ list¿¡ vo¸¦ Ãß°¡
+				//ì½ì€ ê²Œì‹œë¬¼ë¡œ ì²˜ë¦¬í•˜ê¸° ìœ„í•´ listì— voë¥¼ ì¶”ê°€
 				list.add(vo);
 			}
 		
 			request.setAttribute("vo", vo);
-			request.setAttribute("cPage", cPage);//JSP¿¡¼­ ¹Ù·Î EL·Î »ç¿ë°¡´É
+			request.setAttribute("cPage", cPage);//JSPì—ì„œ ë°”ë¡œ ELë¡œ ì‚¬ìš©ê°€ëŠ¥
 		}
 		
 		return "/view.jsp";

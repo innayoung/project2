@@ -3,7 +3,7 @@ package bbs.action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import mybatis.dao.BbsDAO;
+import mybatis.dao.MemDAO;
 import mybatis.vo.MemVO;
 
 public class regAction2 implements Action {
@@ -23,7 +23,7 @@ public class regAction2 implements Action {
 				+request.getParameter("phone2")+"-"
 				+request.getParameter("phone3");
 		
-		boolean chk = BbsDAO.add_member(id, pw, name, email, phone);
+		boolean chk = MemDAO.add_member(id, pw, name, email, phone);
 
 		MemVO mvo = null;
 

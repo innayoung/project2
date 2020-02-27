@@ -14,7 +14,7 @@ public class saveImageAction implements Action {
 	@Override
 	public String execute(HttpServletRequest request, 
 			HttpServletResponse response) {
-		// ÀÌ¹ÌÁö¸¦ ÀúÀåÇÒ À§Ä¡¸¦ Àı´ë°æ·ÎÈ­ ½ÃÅ²´Ù.
+		// ì´ë¯¸ì§€ë¥¼ ì €ì¥í•  ìœ„ì¹˜ë¥¼ ì ˆëŒ€ê²½ë¡œí™” ì‹œí‚¨ë‹¤.
 		ServletContext application = request.getServletContext();
 		String path = application.getRealPath("/editor_img");
 		
@@ -28,10 +28,10 @@ public class saveImageAction implements Action {
 			if(f != null)
 				fname = f.getName();
 			
-			//jspÆÄÀÏ¿¡¼­ jsonÇ¥±â¹ıÀ¸·Î Áö±İ ¾÷·ÎµåµÈ ÆÄÀÏÀÇ
-			//°æ·Î¸¦ Ãâ·ÂÇØ¾ß ÇÑ´Ù.
-			//±×·¡¼­ ÆÄÀÏ¸í°ú °æ·Î¸¦ request¿¡ ÀúÀåÇÑ ÈÄ
-			//jsp·Î forwardµÇ¾î Ç¥ÇöÇØ¾ß ÇÔ!
+			//jspíŒŒì¼ì—ì„œ jsoní‘œê¸°ë²•ìœ¼ë¡œ ì§€ê¸ˆ ì—…ë¡œë“œëœ íŒŒì¼ì˜
+			//ê²½ë¡œë¥¼ ì¶œë ¥í•´ì•¼ í•œë‹¤.
+			//ê·¸ë˜ì„œ íŒŒì¼ëª…ê³¼ ê²½ë¡œë¥¼ requestì— ì €ì¥í•œ í›„
+			//jspë¡œ forwardë˜ì–´ í‘œí˜„í•´ì•¼ í•¨!
 			request.setAttribute("fname", fname);
 			request.setAttribute("c_path", request.getContextPath());
 		} catch (Exception e) {

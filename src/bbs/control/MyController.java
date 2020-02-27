@@ -29,8 +29,8 @@ import bbs.action.Action;
 public class MyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	//action.propertiesÆÄÀÏ¿¡ ÀÖ´Â Å¬·¡½º °æ·ÎµéÀÌ
-	//»ı¼ºµÇ¾î ÀúÀåµÉ Map±¸Á¶ ¼±¾ğ
+	//action.propertiesíŒŒì¼ì— ìˆëŠ” í´ë˜ìŠ¤ ê²½ë¡œë“¤ì´
+	//ìƒì„±ë˜ì–´ ì €ì¥ë  Mapêµ¬ì¡° ì„ ì–¸
 	private Map<String, Action> actionMap;
 	
     public MyController() {
@@ -41,58 +41,58 @@ public class MyController extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		// Çö ¸Ş¼­µå Ã¹ ¿äÃ»ÀÚ¿¡ ÀÇÇØ
-		//´Ü ÇÑ¹ø¸¸ ¼öÇàÇÏ´Â °÷!
+		// í˜„ ë©”ì„œë“œ ì²« ìš”ì²­ìì— ì˜í•´
+		//ë‹¨ í•œë²ˆë§Œ ìˆ˜í–‰í•˜ëŠ” ê³³!
 		
-		//ÇöÀç ¼­ºí¸´ÀÌ »ı¼ºµÉ ¶§ Àü´ŞµÈ ÃÊ±â ÆÄ¶ó¹ÌÅÍ °¡Á®¿Â´Ù.
+		//í˜„ì¬ ì„œë¸”ë¦¿ì´ ìƒì„±ë  ë•Œ ì „ë‹¬ëœ ì´ˆê¸° íŒŒë¼ë¯¸í„° ê°€ì ¸ì˜¨ë‹¤.
 		String props_path = getInitParameter("myParam");
 		// "/WEB-INF/action.properties"
 		
 		
-		//¹ŞÀº action.propertiesÆÄÀÏÀÇ °æ·Î¸¦ Àı´ë°æ·ÎÈ­ ½ÃÅ²´Ù.
-		//¼­ºí¸´¿¡¼­´Â applicationÀ» Á÷Á¢ ±¸ÇØ¾ß ÇÑ´Ù.
+		//ë°›ì€ action.propertiesíŒŒì¼ì˜ ê²½ë¡œë¥¼ ì ˆëŒ€ê²½ë¡œí™” ì‹œí‚¨ë‹¤.
+		//ì„œë¸”ë¦¿ì—ì„œëŠ” applicationì„ ì§ì ‘ êµ¬í•´ì•¼ í•œë‹¤.
 		ServletContext application = getServletContext();
 		
 		String path = application.getRealPath(props_path);
 		
-		//Àı´ë°æ·ÎÈ­ ½ÃÅ² ÀÌÀ¯´Â
-		// ÇØ´ç ÆÄÀÏÀÇ ³»¿ë(Å¬·¡½º °æ·Îµé)À» ½ºÆ®¸²À» ÀÌ¿ëÇÏ¿©
-		// ÀĞ¾î¿Í¼­ Properties°´Ã¼¿¡ ´ã±â À§ÇÔÀÌ´Ù.
+		//ì ˆëŒ€ê²½ë¡œí™” ì‹œí‚¨ ì´ìœ ëŠ”
+		// í•´ë‹¹ íŒŒì¼ì˜ ë‚´ìš©(í´ë˜ìŠ¤ ê²½ë¡œë“¤)ì„ ìŠ¤íŠ¸ë¦¼ì„ ì´ìš©í•˜ì—¬
+		// ì½ì–´ì™€ì„œ Propertiesê°ì²´ì— ë‹´ê¸° ìœ„í•¨ì´ë‹¤.
 		Properties props = new Properties();
 		
-		//PropertiesÀÇ loadÇÔ¼ö¸¦ ÀÌ¿ëÇÏ¿© ³»¿ëµéÀ» ÀĞ¾î¿Â´Ù.
-		// ÀÌ¶§ InputStreamÀÌ ÇÊ¿äÇÏ´Ù.
+		//Propertiesì˜ loadí•¨ìˆ˜ë¥¼ ì´ìš©í•˜ì—¬ ë‚´ìš©ë“¤ì„ ì½ì–´ì˜¨ë‹¤.
+		// ì´ë•Œ InputStreamì´ í•„ìš”í•˜ë‹¤.
 		FileInputStream fis = null;
 		try {
-			//action.propertiesÆÄÀÏ°ú ¿¬°áµÇ´Â ½ºÆ®¸²
+			//action.propertiesíŒŒì¼ê³¼ ì—°ê²°ë˜ëŠ” ìŠ¤íŠ¸ë¦¼
 			fis = new FileInputStream(path);
 			
-			props.load(fis);//action.propertiesÆÄÀÏÀÇ
-			//³»¿ëµéÀ» ÀĞ¾î¼­ ºñ¾ú´ø Properties°´Ã¼¿¡
-			//Å°¿Í °ªÀ» ½ÖÀ¸·Î ÀúÀåÇß´Ù.
-			//¿¹)  "hello" ------> "ex4.HelloAction"
+			props.load(fis);//action.propertiesíŒŒì¼ì˜
+			//ë‚´ìš©ë“¤ì„ ì½ì–´ì„œ ë¹„ì—ˆë˜ Propertiesê°ì²´ì—
+			//í‚¤ì™€ ê°’ì„ ìŒìœ¼ë¡œ ì €ì¥í–ˆë‹¤.
+			//ì˜ˆ)  "hello" ------> "ex4.HelloAction"
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		//////////////////////////////////////////////////////
-		////// »ı¼ºÇÒ °´Ã¼µéÀÇ °æ·Î°¡ ¸ğµÎ
-		////// Properties°´Ã¼·Î ÀúÀåµÇ¾ú´Ù. ÇÏÁö¸¸
-		////// ÇöÀç ÄÁÆ®·Ñ·¯ ÀÔÀå¿¡¼­´Â
-		////// »ı¼ºÇÒ °´Ã¼°¡ ¸î°³ÀÌ¸ç, ¾î¶² °´Ã¼ÀÎÁö?
-		////// ¾ËÁö ¸øÇÑ´Ù. Properties¿¡ ÀúÀåµÈ Å°µéÀ» ¸ğµÎ
-		////// °¡Á®¿Í ºÁ¾ß ¾Ë ¼ö ÀÖ´Ù.
+		////// ìƒì„±í•  ê°ì²´ë“¤ì˜ ê²½ë¡œê°€ ëª¨ë‘
+		////// Propertiesê°ì²´ë¡œ ì €ì¥ë˜ì—ˆë‹¤. í•˜ì§€ë§Œ
+		////// í˜„ì¬ ì»¨íŠ¸ë¡¤ëŸ¬ ì…ì¥ì—ì„œëŠ”
+		////// ìƒì„±í•  ê°ì²´ê°€ ëª‡ê°œì´ë©°, ì–´ë–¤ ê°ì²´ì¸ì§€?
+		////// ì•Œì§€ ëª»í•œë‹¤. Propertiesì— ì €ì¥ëœ í‚¤ë“¤ì„ ëª¨ë‘
+		////// ê°€ì ¸ì™€ ë´ì•¼ ì•Œ ìˆ˜ ìˆë‹¤.
 		//////////////////////////////////////////////////////
 		
 		Iterator<Object> it = props.keySet().iterator();
 		
-		//Å°µéÀ» ¸ğµÎ ¾ò¾úÀ¸´Ï Å°¿¡ ¿¬°áµÈ Å¬·¡½º °æ·Î¸¦
-		//ÇÏ³ª¾¿ ¾ò¾î³»¾î °´Ã¼¸¦ »ı¼ºÇÑ ÈÄ Map±¸Á¶¿¡ ÀúÀå!
+		//í‚¤ë“¤ì„ ëª¨ë‘ ì–»ì—ˆìœ¼ë‹ˆ í‚¤ì— ì—°ê²°ëœ í´ë˜ìŠ¤ ê²½ë¡œë¥¼
+		//í•˜ë‚˜ì”© ì–»ì–´ë‚´ì–´ ê°ì²´ë¥¼ ìƒì„±í•œ í›„ Mapêµ¬ì¡°ì— ì €ì¥!
 		
 		while(it.hasNext()) {
-			//¸ÕÀú Å°¸¦ ÇÏ³ª °¡Á®¿Í¼­ ¹®ÀÚ¿­·Î º¯È¯!
+			//ë¨¼ì € í‚¤ë¥¼ í•˜ë‚˜ ê°€ì ¸ì™€ì„œ ë¬¸ìì—´ë¡œ ë³€í™˜!
 			String key = (String)it.next();
 			
-			//À§¿¡¼­ ¹ŞÀº Å°¿Í ¿¬°áµÈ value¸¦ ¾ò¾î³½´Ù.
+			//ìœ„ì—ì„œ ë°›ì€ í‚¤ì™€ ì—°ê²°ëœ valueë¥¼ ì–»ì–´ë‚¸ë‹¤.
 			String value = props.getProperty(key);
 			// "ex4.HelloAction"
 			
@@ -105,7 +105,7 @@ public class MyController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-		}//whileÀÇ ³¡!
+		}//whileì˜ ë!
 				
 	}
 
@@ -113,29 +113,29 @@ public class MyController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// ¿äÃ»½Ã ÇÑ±ÛÃ³¸®
-		// post¹æ½ÄÀÇ ÇÑ±ÛÃ³¸®¸¸ µÈ °ÍÀÌ´Ù.
-		// get¹æ½ÄÀÇ ÇÑ±ÛÃ³¸®´Â server.xml¿¡ 
+		// ìš”ì²­ì‹œ í•œê¸€ì²˜ë¦¬
+		// postë°©ì‹ì˜ í•œê¸€ì²˜ë¦¬ë§Œ ëœ ê²ƒì´ë‹¤.
+		// getë°©ì‹ì˜ í•œê¸€ì²˜ë¦¬ëŠ” server.xmlì— 
 		// <Connector URIEncoding="UTF-8" connectionTimeout="20000" port="9090" protocol="HTTP/1.1" redirectPort="8443"/>
 		// <Connector URIEncoding="UTF-8" port="8009" protocol="AJP/1.3" redirectPort="8443"/>
-		// ÀÌ µÎ°¡Áö¿¡ À§¿Í °°ÀÌ URIEncoding="UTF-8" ÇØÁÖ¾î ÇÑ±ÛÃ³¸®ÇÑ´Ù.
+		// ì´ ë‘ê°€ì§€ì— ìœ„ì™€ ê°™ì´ URIEncoding="UTF-8" í•´ì£¼ì–´ í•œê¸€ì²˜ë¦¬í•œë‹¤.
 		request.setCharacterEncoding("utf-8");
 		
-		// typeÀÌ¶ó´Â ÆÄ¶ó¹ÌÅÍ ¹Ş±â
+		// typeì´ë¼ëŠ” íŒŒë¼ë¯¸í„° ë°›ê¸°
 		String type = request.getParameter("type");
 		
-		// typeÀÌ nullÀÌ¸é ±âº»°´Ã¼¸¦ ÀÎ½ÄÇÒ ¼ö ÀÖµµ·Ï
-		// "hello"¸¦ ³Ö¾îÁØ´Ù.
+		// typeì´ nullì´ë©´ ê¸°ë³¸ê°ì²´ë¥¼ ì¸ì‹í•  ìˆ˜ ìˆë„ë¡
+		// "hello"ë¥¼ ë„£ì–´ì¤€ë‹¤.
 		if(type == null)
 			type = "list";
 		
-		//typeÀ¸·Î ¹ŞÀº °ªÀÌ actionMapÀÇ key·Î »ç¿ëµÊ!
+		//typeìœ¼ë¡œ ë°›ì€ ê°’ì´ actionMapì˜ keyë¡œ ì‚¬ìš©ë¨!
 		Action action = actionMap.get(type);
 		
 		String viewPath = action.execute(request, response);
 		
 		if(viewPath != null && viewPath.trim().length() > 0) {
-//			if(viewPath.equals("ans")) {						// ajaxÅë½ÅÀ¸·Î ´ñ±ÛÁßº¹ ¹ß»ı¾ÈÇÔ
+//			if(viewPath.equals("ans")) {						// ajaxí†µì‹ ìœ¼ë¡œ ëŒ“ê¸€ì¤‘ë³µ ë°œìƒì•ˆí•¨
 //				response.sendRedirect("control?type=view&cPage="+request.getParameter("cPage")+"&b_idx="+request.getParameter("b_idx"));
 //			}else {
 			RequestDispatcher disp = 

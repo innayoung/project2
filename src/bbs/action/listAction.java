@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bbs.util.Paging;
-import mybatis.dao.BbsDAO;
+import mybatis.dao.ListDAO;
 import mybatis.vo.BbsVO;
 
 public class listAction implements Action {
@@ -13,37 +13,37 @@ public class listAction implements Action {
 	public String execute(HttpServletRequest request, 
 			HttpServletResponse response) {
 		
-		// ÆäÀÌÂ¡ Ã³¸®¸¦ À§ÇÑ ÀÛ¾÷
+		// í˜ì´ì§• ì²˜ë¦¬ë¥¼ ìœ„í•œ ì‘ì—…
 		Paging page = new Paging();
 		
-		//ÀüÃ¼ÆäÀÌÁö ¼ö¸¦ ±¸ÇÏ±â À§ÇØ ¸ÕÀú
-		//ÃÑ °Ô½Ã¹°ÀÇ ¼ö¸¦ ±¸ÇØ¼­ ÀüÃ¼ÆäÀÌÁö °ªÀ» ÁöÁ¤ÇÑ´Ù.
+		//ì „ì²´í˜ì´ì§€ ìˆ˜ë¥¼ êµ¬í•˜ê¸° ìœ„í•´ ë¨¼ì €
+		//ì´ ê²Œì‹œë¬¼ì˜ ìˆ˜ë¥¼ êµ¬í•´ì„œ ì „ì²´í˜ì´ì§€ ê°’ì„ ì§€ì •í•œë‹¤.
 		//int cnt = BbsDAO.getTotalCount();
 		//page.setTotalRecord(cnt);
-		page.setTotalRecord(BbsDAO.get_totalCount());
-		//À§ÀÇ ÃÑ °Ô½Ã¹°ÀÇ ¼ö°¡ Á¤ÇØÁö¸é¼­ ÀÚµ¿ÀûÀ¸·Î
-		// ÃÑ ÆäÀÌÁö ¼ö°¡ º¯°æµÈ´Ù.
+		page.setTotalRecord(ListDAO.get_totalCount());
+		//ìœ„ì˜ ì´ ê²Œì‹œë¬¼ì˜ ìˆ˜ê°€ ì •í•´ì§€ë©´ì„œ ìë™ì ìœ¼ë¡œ
+		// ì´ í˜ì´ì§€ ìˆ˜ê°€ ë³€ê²½ëœë‹¤.
 		
-		//ÆÄ¶ó¹ÌÅÍ·Î ÇöÀç ÆäÀÌÁö °ªÀÌ ÀÖ´ÂÁö ¹Ş¾Æº»´Ù.
+		//íŒŒë¼ë¯¸í„°ë¡œ í˜„ì¬ í˜ì´ì§€ ê°’ì´ ìˆëŠ”ì§€ ë°›ì•„ë³¸ë‹¤.
 		String cPage = request.getParameter("cPage");
 		
 		if(cPage != null){
 			int p = Integer.parseInt(cPage);
-			page.setNowPage(p); //ÀÌ¶§!!!!!
-			// °Ô½Ã¹°À» ÃßÃâÇÒ ¹üÀ§(begin, end) ±×¸®°í
-			//½ÃÀÛÆäÀÌÁö¿Í ¸¶Áö¸·ÆäÀÌÁö °ªÀÌ ¸ğµÎ ±¸ÇØÁø´Ù.
+			page.setNowPage(p); //ì´ë•Œ!!!!!
+			// ê²Œì‹œë¬¼ì„ ì¶”ì¶œí•  ë²”ìœ„(begin, end) ê·¸ë¦¬ê³ 
+			//ì‹œì‘í˜ì´ì§€ì™€ ë§ˆì§€ë§‰í˜ì´ì§€ ê°’ì´ ëª¨ë‘ êµ¬í•´ì§„ë‹¤.
 			
-		}else //cPage¶ó´Â ÆÄ¶ó¹ÌÅÍ°¡ ¾øÀÌ È£ÃâµÇ¾úÀ» ¶§
-			page.setNowPage(page.getNowPage());// setNowPage()°¡
-		//È£ÃâµÇÁö ¾ÊÀ¸¸é begin, end, startPage, endPage°ªÀÌ
-		//±¸ÇØÁöÁö ¾Ê¾Æ¼­ ¸ñ·ÏÀ» ¾òÀ» ¼ö ¾ø´Ù.
+		}else //cPageë¼ëŠ” íŒŒë¼ë¯¸í„°ê°€ ì—†ì´ í˜¸ì¶œë˜ì—ˆì„ ë•Œ
+			page.setNowPage(page.getNowPage());// setNowPage()ê°€
+		//í˜¸ì¶œë˜ì§€ ì•Šìœ¼ë©´ begin, end, startPage, endPageê°’ì´
+		//êµ¬í•´ì§€ì§€ ì•Šì•„ì„œ ëª©ë¡ì„ ì–»ì„ ìˆ˜ ì—†ë‹¤.
 		
-		//È­¸é¿¡ Ç¥ÇöÇÒ °Ô½Ã¹°µéÀ» °ËÃâÇØ ¿Â´Ù.
-		BbsVO[] ar = BbsDAO.get_list(
+		//í™”ë©´ì— í‘œí˜„í•  ê²Œì‹œë¬¼ë“¤ì„ ê²€ì¶œí•´ ì˜¨ë‹¤.
+		BbsVO[] ar = ListDAO.get_list(
 			page.getBegin(), page.getEnd());
 		
-		// ºä ÆäÀÌÁö(list.JSP)¿¡¼­ Ç¥ÇöÇÒ ÀÚ¿øµéÀ»
-		//request¿¡ ÀúÀåÇÑ´Ù.
+		// ë·° í˜ì´ì§€(list.JSP)ì—ì„œ í‘œí˜„í•  ìì›ë“¤ì„
+		//requestì— ì €ì¥í•œë‹¤.
 		request.setAttribute("ar", ar);
 		request.setAttribute("page", page);
 		

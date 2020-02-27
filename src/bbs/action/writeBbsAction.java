@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-import mybatis.dao.BbsDAO;
+import mybatis.dao.BbsDAO2;
 
 public class writeBbsAction implements Action {
 
@@ -17,21 +17,21 @@ public class writeBbsAction implements Action {
 	public String execute(HttpServletRequest request, 
 			HttpServletResponse response) {
 		
-		//ÇöÀç ¸Ş¼­µå´Â list.jsp¿¡ ÀÖ´Â [±Û¾²±â]¹öÆ°À»
-		//Å¬¸¯ÇßÀ» ¶§¿Í write.jsp¿¡¼­ [º¸³»±â]¹öÆ°À» Å¬¸¯ÇßÀ» ¶§
-		//È£ÃâµÈ´Ù.
+		//í˜„ì¬ ë©”ì„œë“œëŠ” list.jspì— ìˆëŠ” [ê¸€ì“°ê¸°]ë²„íŠ¼ì„
+		//í´ë¦­í–ˆì„ ë•Œì™€ write.jspì—ì„œ [ë³´ë‚´ê¸°]ë²„íŠ¼ì„ í´ë¦­í–ˆì„ ë•Œ
+		//í˜¸ì¶œëœë‹¤.
 		
-		String c_type = request.getContentType();//¿äÃ»ÇÑ °÷À¸·Î ºÎÅÍ
-		// MIMEÅ¸ÀÔÀ» ¾ò´Â´Ù.
-		// - Get¹æ½Ä : null
-		// - Post¹æ½Ä : application/....
-		// - Post¹æ½Ä¿¡ encType="multipart/form-data": multipart/....
+		String c_type = request.getContentType();//ìš”ì²­í•œ ê³³ìœ¼ë¡œ ë¶€í„°
+		// MIMEíƒ€ì…ì„ ì–»ëŠ”ë‹¤.
+		// - Getë°©ì‹ : null
+		// - Postë°©ì‹ : application/....
+		// - Postë°©ì‹ì— encType="multipart/form-data": multipart/....
 		//System.out.println(c_type);
 		String viewPath = "/write.jsp";
 		
 		if(c_type != null && c_type.startsWith("multipart/")) {
 			try {
-				//Ã·ºÎÆÄÀÏÀ» ÀúÀåÇÒ À§Ä¡¸¦ Àı´ë°æ·ÎÈ­ ½ÃÅ²´Ù.
+				//ì²¨ë¶€íŒŒì¼ì„ ì €ì¥í•  ìœ„ì¹˜ë¥¼ ì ˆëŒ€ê²½ë¡œí™” ì‹œí‚¨ë‹¤.
 				ServletContext application = 
 						request.getServletContext();
 				
@@ -41,34 +41,34 @@ public class writeBbsAction implements Action {
 					new MultipartRequest(request, path, 
 						1024*1024*5, "utf-8",
 						new DefaultFileRenamePolicy());
-				//ÀÌ¶§ Ã·ºÎÆÄÀÏ ¾÷·Îµå µÊ!!!!!!
+				//ì´ë•Œ ì²¨ë¶€íŒŒì¼ ì—…ë¡œë“œ ë¨!!!!!!
 				
-				//³ª¸ÓÁö ÆÄ¶ó¹ÌÅÍµé ¹Ş±â
+				//ë‚˜ë¨¸ì§€ íŒŒë¼ë¯¸í„°ë“¤ ë°›ê¸°
 				String title = mr.getParameter("title");
 				String writer = mr.getParameter("writer");
 				String content = mr.getParameter("content");
 				
-				//ÆÄÀÏÀÌ Ã·ºÎµÇ¾ú´ÂÁö? 
+				//íŒŒì¼ì´ ì²¨ë¶€ë˜ì—ˆëŠ”ì§€? 
 				File f = mr.getFile("file");
 				
 				String f_name = "";
 				String o_name = "";
 				if(f != null){
-					//½ÇÁ¦ Ã·ºÎÇÒ ¶§ ÆÄÀÏ¸í°ú ¿Ã¶ó°¥ ¶§ ÀÌ¸§À» ¾ò´Â´Ù.
+					//ì‹¤ì œ ì²¨ë¶€í•  ë•Œ íŒŒì¼ëª…ê³¼ ì˜¬ë¼ê°ˆ ë•Œ ì´ë¦„ì„ ì–»ëŠ”ë‹¤.
 					o_name = mr.getOriginalFileName("file");
 					f_name = f.getName();
 				}
 				String ip = request.getRemoteAddr(); //ip
 				
-				//DBÀúÀå
-				BbsDAO.write_bbs(title, writer, content, f_name, o_name, ip);
+				//DBì €ì¥
+				BbsDAO2.write_bbs(title, writer, content, f_name, o_name, ip);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
-			//JSP°æ·Î¸¦ ¹İÈ¯ÇÏ¸é forwardµÇµµ·Ï µÇ¾î ÀÖ¾î¼­
-			// f5 Áï, È­¸é °»½ÅÀ» ÇÏ¸é ÀúÀåµÈ Á¤º¸°¡ °è¼Ó ÀúÀåµÈ´Ù.
+			//JSPê²½ë¡œë¥¼ ë°˜í™˜í•˜ë©´ forwardë˜ë„ë¡ ë˜ì–´ ìˆì–´ì„œ
+			// f5 ì¦‰, í™”ë©´ ê°±ì‹ ì„ í•˜ë©´ ì €ì¥ëœ ì •ë³´ê°€ ê³„ì† ì €ì¥ëœë‹¤.
 			//viewPath = "control?type=list";
 			viewPath = null;
 		}

@@ -1,7 +1,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="mybatis.vo.CommVO"%>
 <%@page import="java.util.List"%>
-<%@page import="mybatis.dao.BbsDAO"%>
 <%@page import="mybatis.vo.BbsVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>

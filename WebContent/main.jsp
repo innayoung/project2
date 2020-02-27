@@ -1,5 +1,6 @@
+<%@page import="mybatis.dao.ListDAO"%>
+<%@page import="mybatis.dao.BbsDAO2"%>
 <%@page import="mybatis.vo.MemVO"%>
-<%@page import="mybatis.dao.BbsDAO"%>
 <%@page import="mybatis.vo.BbsVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -8,7 +9,7 @@
 
 	MemVO mvo = null;
 	
-	Object obj_B = BbsDAO.load_overseas_best();
+	Object obj_B = ListDAO.load_bestBbs();
 	BbsVO bvo = null;
 	
 	if(obj_B != null){
@@ -129,7 +130,7 @@
 				<div class="content bbs">
 					<ul>
 <%
-Object obj = BbsDAO.load_overseas();
+Object obj = ListDAO.load_newBbs();
 
 BbsVO[] ar = null;
 if(obj != null){
