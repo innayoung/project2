@@ -6,46 +6,47 @@
 
 <!-- registry 나영 -->
 	<!-- 회원가입시 회원 아이디 중복검사 -->
-	<select id="get_member" parameterType="String" resultType="mybatis.vo.MemVO">
+<!--
+	<select id="get_member0" parameterType="String" resultType="mybatis.vo.MemVO">
 		select * from member_t
 		where m_id = #{id}
 	</select>
-
+ -->
 	<!-- 회원 추가  -->
-	<insert id="add_member" parameterType="java.util.Map">
+<!--
+	<insert id="add_member0" parameterType="java.util.Map">
 	 INSERT INTO member_t(m_id, m_pw, m_name, m_email, m_phone, reg_date) 
 	 VALUES(#{id}, #{pw}, #{name}, #{email}, #{phone}, sysdate)
 	</insert>
-	
+ -->
 <!-- Login 도현 -->
 	<!-- id, pw받아서 login기능 -->
-	<select id="login_member" parameterType="java.util.Map"
+<!--
+	<select id="login_member0" parameterType="java.util.Map"
 	resultType="mybatis.vo.MemVO">
 		SELECT * FROM member_t
 		WHERE m_id = #{id} AND m_pw = #{pw}
 	</select>
-	
-	
+ -->
 <!--  -->
 <!--  -->
 
 <!-- registry 나영 -->
 	<!-- 회원가입시 회원 아이디 중복검사 -->
-	<select id="get_member2" parameterType="String" resultType="mybatis.vo.MemVO">
+	<select id="get_member" parameterType="String" resultType="mybatis.vo.MemVO">
 		select * from Project_member_t
 		where m_id = #{id}
 	</select>
 
 	<!-- 회원 추가  -->
-	<insert id="add_member2" parameterType="java.util.Map">
+	<insert id="add_member" parameterType="java.util.Map">
 	 INSERT INTO Project_member_t(m_id, m_pwd, m_name, m_email, m_phone, m_status) 
 	 VALUES(#{id}, #{pw}, #{name}, #{email}, #{phone}, 0)
 	</insert>
 	
 <!-- Login 도현 -->
 	<!-- id, pw받아서 login기능 -->
-	<select id="login_member2" parameterType="java.util.Map"
-	resultType="mybatis.vo.MemVO">
+	<select id="login_member" parameterType="java.util.Map" resultType="mybatis.vo.MemVO">
 		SELECT * FROM Project_member_t
 		WHERE m_id = #{id} AND m_pwd = #{pw}
 	</select>

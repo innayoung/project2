@@ -6,8 +6,70 @@
 
 <!-- List 은경 -->
 	<!-- 전체 게시물 수 반환기능 -->
-	<select id="get_totalCount" resultType="int">
+<!-- 
+	<select id="get_totalCount0" resultType="int">
 		SELECT COUNT(*) FROM bbs_t
+		WHERE status = 0
+	</select>
+ -->
+ 
+	<!-- list의 해당 페이지의 게시물을 불러오는 기능 -->
+<!-- 
+	<select id="get_list0" parameterType="java.util.Map"
+	resultMap="map1">
+		SELECT * FROM(
+			SELECT rownum r_num, a.* FROM(
+				SELECT * FROM bbs_t
+				WHERE status = 0
+				ORDER BY b_idx DESC
+			) a
+		) WHERE r_num BETWEEN #{begin} AND #{end}
+	</select>
+ -->
+ 
+	<!-- bbsList의 resultMap -->
+<!-- 
+	<resultMap type="mybatis.vo.BbsVO" id="map10">
+		<id property="b_idx" column="b_idx"/>
+		<collection property="c_list" ofType="mybatis.vo.CommVO"
+			column="b_idx" select="comm.get_commList"/>
+	</resultMap>
+ -->
+
+
+	<!-- 해외여행 인기 게시글 1개 조회 -->
+<!-- 
+	<select id="load_bestBbs0" resultType="mybatis.vo.BbsVO">
+		<![CDATA[	
+		select * 
+		from (select * from Project_bbs_t
+      		order by write_date DESC)
+		where rownum = 1
+		]]>
+	</select>
+ -->
+ 
+<!-- Main 태희 -->
+	<!-- 해외여행 최신 게시글 5개 조회 -->
+<!-- 
+	<select id="load_newBbs0" resultType="mybatis.vo.BbsVO">
+		<![CDATA[		
+		select * 
+		from (select * from Project_bbs_t
+      		order by write_date desc)
+		where rownum <= 5
+		]]>
+	</select>
+ -->
+	
+<!--  -->
+<!--  -->
+
+
+<!-- List 은경 -->
+	<!-- 전체 게시물 수 반환기능 -->
+	<select id="get_totalCount" resultType="int">
+		SELECT COUNT(*) FROM Project_bbs_t
 		WHERE status = 0
 	</select>
 
@@ -16,7 +78,7 @@
 	resultMap="map1">
 		SELECT * FROM(
 			SELECT rownum r_num, a.* FROM(
-				SELECT * FROM bbs_t
+				SELECT * FROM Project_bbs_t
 				WHERE status = 0
 				ORDER BY b_idx DESC
 			) a
@@ -29,14 +91,13 @@
 		<collection property="c_list" ofType="mybatis.vo.CommVO"
 			column="b_idx" select="comm.get_commList"/>
 	</resultMap>
-
-
-
+	
+	
 	<!-- 해외여행 인기 게시글 1개 조회 -->
 	<select id="load_bestBbs" resultType="mybatis.vo.BbsVO">
 		<![CDATA[	
 		select * 
-		from (select * from bbs_t
+		from (select * from Project_bbs_t
       		order by write_date DESC)
 		where rownum = 1
 		]]>
@@ -47,7 +108,7 @@
 	<select id="load_newBbs" resultType="mybatis.vo.BbsVO">
 		<![CDATA[		
 		select * 
-		from (select * from bbs_t
+		from (select * from Project_bbs_t
       		order by write_date desc)
 		where rownum <= 5
 		]]>

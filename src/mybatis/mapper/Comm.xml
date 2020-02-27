@@ -5,32 +5,33 @@
 <mapper namespace="comm">
 
 <!-- 특정 게시글의 댓글 리스트 반환 -->
-	<select id="get_commList" resultType="mybatis.vo.CommVO"
-	parameterType="String">
+<!--
+	<select id="get_commList0" resultType="mybatis.vo.CommVO" parameterType="String">
 		SELECT * FROM comment_t
 		WHERE b_idx = #{b_idx}
 	</select>
-	
+-->
 	<!-- 댓글 추가 -->
-	<insert id="write_comm">
+<!--
+	<insert id="write_comm0">
 		insert into comment_t(c_idx, writer, content, pwd, write_date, ip, b_idx)
 		values(comment_t_seq.NEXTVAL, #{writer}, #{content}, #{pwd}, sysdate, #{ip}, #{b_idx})
 	</insert>
-	
+-->
 <!--  -->
 <!--  -->
 
 	<!-- 특정 게시글의 댓글 리스트 반환 -->
-	<select id="get_commList2" resultType="mybatis.vo.CommVO"
+	<select id="get_commList" resultType="mybatis.vo.CommVO"
 	parameterType="String">
 		SELECT * FROM Project_comment_t
 		WHERE b_idx = #{b_idx}
 	</select>
 	
 	<!-- 댓글 추가 -->
-	<insert id="write_comm2">
+	<insert id="write_comm">
 		insert into Project_comment_t(c_idx, writer, content, pwd, write_date, ip, b_idx)
-		values(comment_t_seq.NEXTVAL, #{writer}, #{content}, #{pwd}, sysdate, #{ip}, #{b_idx})
+		values(Project_comment_t_seq.NEXTVAL, #{writer}, #{content}, #{pwd}, sysdate, #{ip}, #{b_idx})
 	</insert>
 	
 </mapper>
