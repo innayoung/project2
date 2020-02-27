@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+table td, table th{
+	font-size: 12px;
+}
+.gray{
+	background-color: #cdcdcd;
+}
+.txt_r{
+	text-align: right;
+}
+.w300{
+	width: 300px;
+	margin: 0;
+	padding: 0;
+}
+.w500{
+	width: 500px;
+	margin: 0;
+	padding: 0;
+}
+.w_full{
+	width: 100%;
+}
+.title_tr{
+	text-align: center;
+	background-color: #cdcdcd;
+}
