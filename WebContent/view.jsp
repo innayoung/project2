@@ -254,7 +254,7 @@
 							msg += "날짜: "+ data[i].write_date +"<br/>";
 						else
 							msg += "날짜: 2020-00-00 24:00:00.0<br/>";
-						
+							
 						msg += "내용: "+ data[i].content +"";
 						msg += "</div>";
 						msg += "<button class=\"btn_cidx\" name=\"btn_cidx\" onclick=\"btn_commedit('"+data[i].c_idx+"')\">Edit</button>";
