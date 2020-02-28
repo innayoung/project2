@@ -4,11 +4,11 @@
 	Object obj = request.getAttribute("vo");
 	if(obj == null){
 %>
-	<pre id="chk" class="success">사용가능</pre>
+	<span id="chk" class="success">사용가능</span>
 <%
 	}else{
 %>
-	<pre id="chk" class="fail">사용불가</pre>
+	<span id="chk" class="fail">사용불가</span>
 <%
 	}
 %>    

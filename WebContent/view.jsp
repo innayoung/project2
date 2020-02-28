@@ -16,57 +16,32 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="css/jquery-ui.min.css"/>
-<link rel="stylesheet" href="css/styles.css"/>
-<link rel="stylesheet" href="css/fontawesome/all.min.css"/>
 <link rel="stylesheet" href="css/bootstrap.min.css" />
 <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
-<style>
-	caption{
-		display: none;
-	}
-	table tbody th{
-		width: 150px;
-		font-size: 15px;
-		color: black;
-	}
-	table tbody td{
-		font-size: 15px;
-		color: #99999;
-	}
-	.card-header{
-		text-align: center;
-		font: 30px bold;
-	}
-	.btn_area{
-		text-align: right;
-	}
-	#del_win{
-		display: none;
-	}
-	
-	div.card-body{
-		padding: 0;
-	}
-	.center-block {
-	  display: block;
-	  margin-left: auto;
-	  margin-right: auto;
-	}	
-	body { padding-top: 120px; }	
-	pre{ height: 300px}			
-</style>
+<link rel="stylesheet" href="css/jquery-ui.min.css"/>
+<link rel="stylesheet" href="css/custom.css"/>
 </head>
-<!-- 상단영역 시작 -->
-	<nav class="navbar navbar-default navbar-fixed-top">
+<!-- nav bar -->
+<div class="container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<div class="navbar-header">      
-		      	<a class="navbar-brand" href="#">Brand</a>
-	          	<a class="navbar-brand" href="control?type=Notice">공지사항</a>
-				<a class="navbar-brand" href="control?type=Overseas">해외패키지</a>
-				<a class="navbar-brand" href="control?type=Domestic">국내패키지</a>
-				<a class="navbar-brand" href="control?type=Free">자유여행</a>
-				<a class="navbar-brand" href="control?type=Review">리뷰</a>				
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	              </button>
+	              <a class="navbar-brand" href="#">HOME</a>
+              </div> 
+	              <div id="navbar" class="navbar-collapse collapse">
+	              <ul class="nav navbar-nav">
+	                <li><a href="control?type=Notice">공지사항</a></li>
+	                <li><a href="control?type=Overseas">해외패키지</a></li>
+	                <li><a href="control?type=Domestic">국내패키지</a></li>
+	                <li><a href="control?type=Free">자유여행</a></li>
+	                <li><a href="control?type=Review">리뷰</a></li>              
+	              </ul>	            		      				
 			</div> 		
 		</div>
 	</nav>
@@ -162,13 +137,16 @@
 		for(CommVO cvo:c_list){
 			c_idx = cvo.getC_idx();
 %>	
-		<div>
-			이름: <%=cvo.getWriter() %> &nbsp;&nbsp;
+		<div class="form-group">
+			작성자: <%=cvo.getWriter() %> &nbsp;&nbsp;
 			날짜: <%=cvo.getWrite_date() %><br/>
-			내용: <%=cvo.getContent() %>
+			<pre><%=cvo.getContent() %></pre>
 		</div>
-		<button  class="btn_cidx" name="btn_cidx" 
-			onclick="btn_commedit('<%= c_idx %>')">Edit</button>
+		<div class="form-group">
+		<input type="button" class="btn btn-primary" value="댓글수정" name="btn_cidx" 
+			onclick="btn_commedit('<%= c_idx %>')"/>
+		<input type="button" value="삭제" id="del_btn" class="btn btn-primary"/>
+		</div>		
 		<hr/>
 <%
 		}//for의 끝
@@ -201,24 +179,30 @@
 	</div>
 	
 	<!-- 댓글 수정창 -->
-	<div id="cedit_win" >	
-		<form class="ce_form1">	
+	<div id="cedit_win" class="card-body" style="display: none;">	
+		<form class="form-horizontal">	
 		<div class="form-group">	
-			<textarea class="form-control" rows="4" cols="80" name="content"placeholder="Add comment"
+			<textarea class="form-control" rows="4" cols="80" name="content"placeholder="Edit comment"
 			id="cedit_content10" ></textarea><br/>
 		</div>
 		</form>	
-		<form class="ce_form2">
+		<form class="form-inline">
 			<label ></label>
 			<input type="text" class="form-control" name="writer" placeholder="Enter writer name"
 			id="cedit_writer" />&nbsp;&nbsp;
 			<input type="password" class="form-control" name="pwd" placeholder="Password"
 			id="cedit_pwd" />&nbsp;&nbsp;
 			
-			<input type="button" class="cedit_btn" value="저장" id="cedit_btn"/> 
+			<input type="button" class="btn btn-primary" value="저장" id="cedit_btn"/> 
 		</form>
 	</div>
-	
+	</div>
+	<footer class="footer">
+      <div class="container">
+        <p class="text-muted">Place sticky footer content here.</p>
+      </div>
+    </footer>
+	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery-3.4.1.min.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
 	<script>

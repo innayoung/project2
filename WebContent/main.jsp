@@ -16,173 +16,123 @@
 		bvo = (BbsVO)obj_B; 
 	}
 	
-	String str = bvo.getContent();				// 이미지 스냅샷 추출
-	int img_begin = str.indexOf("<img src=");
-	int img_end = str.indexOf(".jpg");
+	//String str = bvo.getContent();				// 이미지 스냅샷 추출
+	//int img_begin = str.indexOf("<img src=");
+	//int img_end = str.indexOf(".jpg");
 	
-	String best_img = str.substring(img_begin+11, img_end+4);
+	//String best_img = str.substring(img_begin+11, img_end+4);
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-	body{
-		width: 674px;
-		height: auto;
-		margin: auto;
-	}
-	
-	a{text-decoration: none;}
-
-	#nav{
-		background: #495057;
-		margin: 0;
-		padding: 0;
-	}
-
-	#main_img{
-		display: inline-block;
-		width: 674px;
-		height: 183px;
-		background: gray;
-	}
-	
-	#topMenu_list{
-		list-style: none;
-		
-	}
-	
-	#topMenu_list li{
-		float: right;
-		margin-left: 10px;
-	}
-	
-	#topMenu_list li a{
-		text-decoration: none;
-		color: #000000;
-	}	
-	#topMenu {
-		display: inline-block;
-		margin-top: 10px;
-		width: 674px;
-	}
-	
-	.content{
-		background: #eeeeee;
-		width: 220px;
-		height: 400px;
-		float: left;
-	}
-	
-	.content ul{
-		list-style: none;
-		overflow: hidden;
-	}
-	.content ul li{
-		overflow: hidden;
-	}
-	
-</style>
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+<link rel="stylesheet" href="css/jquery-ui.min.css"/>
+<link rel="stylesheet" href="css/main.css"/>
 </head>
+<!-- nav bar -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	              </button>
+	              <a class="navbar-brand" href="Controller?type=main">HOME</a>
+              </div> 
+	              <div id="navbar" class="navbar-collapse collapse">
+	              <ul class="nav navbar-nav">
+	                <li><a href="control?type=Notice">공지사항</a></li>
+	                <li><a href="control?type=Overseas">해외패키지</a></li>
+	                <li><a href="control?type=Domestic">국내패키지</a></li>
+	                <li><a href="control?type=Free">자유여행</a></li>
+	                <li><a href="control?type=Review">리뷰</a></li>              
+	              </ul>
+              <div id="navbar" class="navbar-collapse collapse">
+         			<form class="navbar-form navbar-right"> 
+         				
+	              <%
+						if(obj_M != null){
+							mvo = (MemVO)obj_M; 
+				  %>	           	  
+	           	  <span> <%= mvo.getM_name() %>님 환영합니다. </span>
+	              <a href="javascript:location.href='#'">내 정보</a>
+	              <button id="btn_logOut" class="btn btn-success">로그아웃</button>	  
+	              <%
+						}else{
+			      %>
+			      	<button type="button" href="javascript:location.href='login.jsp'" class="btn btn-primary">로그인</button>
+				 	<button type="button" href="javascript:location.href='reg2.jsp'" class="btn btn-primary">회원가입</button>           
+	              <%
+						}
+				   %>
+	              
+	              </form>
+       			 </div><!--/.navbar-collapse -->               		      				
+			</div> 		
+		</div>
+	</nav>
 <body>
-	<div id="wrap">
-		<!-- 상단영역 시작 -->
-		<div id="topMenu">
-			<a href="Controller?type=main"><img alt="OOO 여행사" src="img/logo.PNG"></a>
-			
-				<ul id="topMenu_list">
-<%
-	if(obj_M != null){
-		mvo = (MemVO)obj_M; 
-%>
-					<li><%= mvo.getM_name() %>님 환영합니다.</li>
-					<li><a href="javascript:location.href='#'"><span class="menu">내 정보</span></a></li>
-					<li><button id="btn_logOut"><span class="menu">로그아웃</span></button></li>
-<%
-	}else{
-%>
-				 	<li><a href="javascript:location.href='login.jsp'"><span class="menu">로그인</span></a></li>
-				 	<li><a href="javascript:location.href='reg2.jsp'"><span class="menu">회원가입</span></a></li>
-<%
-	}
-%>	 	
-				</ul>
-		</div>
-		<!-- 상단영역 끝 -->
-		<!-- 본문영역 시작 -->
-		<div id="content">
-			<div id="main_img">
-				<img alt="메인 이미지 영역" src="img/empty.jpg"/>
-			</div>
-			<div id="nav">
-			<!-- 로고 & 네비게이션바 들어올 자리 -->
-			</div>
-			<!-- 첫번째 게시판 자리 -->
-			<div class="content fl">
-				<div class="content_img">
-					<p class="title">인기 해외여행 패키지</p>
-					<a class="thum_img">
-							<img alt="인기 해외사진" src="<%= best_img %>"/>
-					</a>
-				</div>
-				<div class="content bbs">
-					<ul>
-<%
-Object obj = ListDAO.load_newBbs();
-
-BbsVO[] ar = null;
-if(obj != null){
-	ar = (BbsVO[])obj;	
+	<div id="wrap">		
+	<!-- 본문영역 시작 -->
+	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Example headline.</h1>
+            </div>
+          </div>
+        </div>      
+      </div>
+     
+    </div><!-- /.carousel -->
+    <div class="container marketing"> 
+	<!-- 첫번째 게시판 자리 -->
+	<div class="row">
+      <div class="col-lg-4">
+        <img class="img-circle" src="<%= 0 %>" alt="Generic placeholder image" width="130" height="140">
+			<h2>해외여행지</h2>
+        <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->		
 	
-	for(BbsVO vo : ar){
-
-%>
-						<li><a href="control?type=view&b_idx=<%= vo.getB_idx() %>"><%= vo.getSubject() %></a></li>					
-<%
-	}
-%>
-					</ul>	
-<%
-}else{
-%>
-					<ul>
-						<li>자료가 존재하지 않습니다.</li>					
-					</ul>
-<%
-}
-%>
-				</div>
-			</div>
-	
-			<!-- 두번째 게시판 자리 -->
-			<div class="content cen">
-				<div class="content_img">
-					<p class="title">인기 국내여행 패키지</p>
-					<a class="thum_img" >
-							<img alt="국내사진" src="/img/@img_dome.png"/>
-					</a>
-				</div>
-				<div class="content bbs">
-					
-				</div>
-			</div>
+	<!-- 두번째 게시판 자리 -->
+ 	<div class="col-lg-4">
+         <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="130" height="140">
+         <h2>국내여행지</h2>
+         <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
+         <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+     </div><!-- /.col-lg-4 -->
 			
-			<!-- 세번째 게시판 자리 -->
-			<div class="content fr">
-				<div class="content_img">
-					<p class="title">인기 여행 리뷰</p>
-					<a class="thum_img">
-							<img alt="리뷰사진" src="/img/@img_review.png"/>
-					</a>
-				</div>
-				<div class="content bbs">
-					
-				</div>
-			</div>
-		</div>
-	</div>
+	<!-- 세번째 게시판 자리 -->
+	<div class="col-lg-4">
+         <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="130" height="140">
+         <h2>여행 리뷰</h2>
+         <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+         <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+       </div><!-- /.col-lg-4 -->
+     	</div><!-- /.row -->
+    </div>
+    </div>	   
+
+	<footer class="footer">
+      <div class="container">
+        <p class="text-muted">Place sticky footer content here.</p>
+      </div>
+    </footer>
+<script src="js/bootstrap.min.js"></script>	
 <script src="js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 	$(function() {

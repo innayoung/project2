@@ -7,76 +7,37 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/jquery-ui.min.css"/>
-<link rel="stylesheet" href="css/styles.css"/>
+<link rel="stylesheet" href="css/summernote-lite.css"/>
 <link rel="stylesheet" href="css/fontawesome/all.min.css"/>
 <link rel="stylesheet" href="css/bootstrap.min.css" />
 <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
-<link rel="stylesheet" href="css/summernote-lite.css"/>
-<style>
-	caption{
-		display: none;
-	}
-	table tbody th{
-		width: 150px;
-		font-size: 15px;
-		color: black;
-	}
-	table tbody td{
-		font-size: 15px;
-		color: #99999;
-	}
-	.card-header{
-		text-align: center;
-		font: 30px bold;
-	}
-	.btn_area{
-		text-align: right;
-	}
-	#del_win{
-		display: none;
-	}
-	div.form-group{
-		margin: 0;
-		padding: 0;
-	}
-	div.card-body{
-		padding: 0;
-	}
-	
-	.no {width:15%}
-	.subject {width:30%}
-	.writer {width:20%}
-	.reg {width:20%}
-	.hit {width:15%}
-	
-	
-	.odd {background:silver}	
-	.center-block {
-		  display: block;
-		  margin-left: auto;
-		  margin-right: auto;
-	}
-	.table{ 
-		padding: 0;
-		margin: 0;	
-	}
-	body { padding-top: 120px; }	
-</style>
+<link rel="stylesheet" href="css/custom.css"/>
 </head>
-<!-- 상단영역 시작 -->
-	<nav class="navbar navbar-default navbar-fixed-top">
+	<!-- nav bar -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<div class="navbar-header">      
-		      	<a class="navbar-brand" href="#">Brand</a>
-	          	<a class="navbar-brand" href="control?type=Notice">공지사항</a>
-				<a class="navbar-brand" href="control?type=Overseas">해외패키지</a>
-				<a class="navbar-brand" href="control?type=Domestic">국내패키지</a>
-				<a class="navbar-brand" href="control?type=Free">자유여행</a>
-				<a class="navbar-brand" href="control?type=Review">리뷰</a>				
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	              </button>
+	              <a class="navbar-brand" href="#">HOME</a>
+              </div> 
+	              <div id="navbar" class="navbar-collapse collapse">
+	              <ul class="nav navbar-nav">
+	                <li><a href="control?type=Notice">공지사항</a></li>
+	                <li><a href="control?type=Overseas">해외패키지</a></li>
+	                <li><a href="control?type=Domestic">국내패키지</a></li>
+	                <li><a href="control?type=Free">자유여행</a></li>
+	                <li><a href="control?type=Review">리뷰</a></li>              
+	              </ul>	            		      				
 			</div> 		
 		</div>
 	</nav>
 <body>
+	<div class="container">
 	<div id="bbs" class="container-md themed-container center-block">
 	<div class="card-header">
 		게시글 작성
@@ -132,7 +93,13 @@
 		</table>
 	</div>
 	</div>
-	
+	</div>
+	<footer class="footer">
+      <div class="container">
+        <p class="text-muted">Place sticky footer content here.</p>
+      </div>
+    </footer>
+	<script src="js/bootstrap.min.js"></script>	
 	
 	<script src="js/jquery-3.4.1.min.js"></script>
 	<script src="js/summernote-lite.js"></script>
@@ -143,8 +110,20 @@
 			
 			$("#content").summernote({
 				height: 300,
-				width: 450,
 				lang: "ko-KR",
+				toolbar: [
+                    // [groupName, [list of button]]
+                    ['Font Style', ['fontname']],
+                    ['style', ['bold', 'italic', 'underline']],
+                    ['font', ['strikethrough']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['paragraph']],
+                    ['height', ['height']],
+                    ['Insert', ['picture']],
+                    ['Insert', ['link']],
+                    ['Misc', ['fullscreen']]
+                ],
 				callbacks:{
 					onImageUpload: function(files, editor){
 						//이미지가 에디터에 추가될 때마다

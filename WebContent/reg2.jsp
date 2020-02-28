@@ -8,137 +8,102 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-	.btn{
-		width: 70px;
-		height: 20px;
-		text-align: center;
-		padding:0px;		
-	}
-	.btn a{
-		display: block;
-		width: 100%;
-		padding: 4px;
-		height: 20px;
-		line-height: 20px;
-		background: #27a;
-		color: #fff;
-		border-radius: 3px;
-		text-decoration: none;
-		font-size: 12px;
-		font-weight: bold;
-	}
-	.btn a:hover{
-		background: #fff;
-		color: #27a;
-		border: 1px solid #27a;
-	}
-	
-	#id, #pw, input[type=text],select{
-		width: 80px;
-		border: 1px solid #27a;
-		border-radius: 3px;
-		padding: 4px;
-	}
-	
-	.txt_r{ padding-left: 10px;}
-	.success{ color: #00f; }
-	.fail{ color: #f00; }
-	
-	#chk{ 
-		margin: 0;
-		margin-top: 7px;
-		font-weight: bold;
-		font-size: 11px;		
-	}
-	
-	div#box{
-		display: inline-block;
-		width: 65px;
-		height: 20px;
-		padding: 0;
-		margin: 0;
-		margin-left: 3px;
-		position: absolute;
-	}
-	
-</style>
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+<link rel="stylesheet" href="css/jquery-ui.min.css"/>
+<link rel="stylesheet" href="css/custom.css"/>
 </head>
+	<!-- nav bar -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	              </button>
+	              <a class="navbar-brand" href="#">HOME</a>
+              </div> 
+	              <div id="navbar" class="navbar-collapse collapse">
+	              <ul class="nav navbar-nav">
+	                <li><a href="control?type=Notice">공지사항</a></li>
+	                <li><a href="control?type=Overseas">해외패키지</a></li>
+	                <li><a href="control?type=Domestic">국내패키지</a></li>
+	                <li><a href="control?type=Free">자유여행</a></li>
+	                <li><a href="control?type=Review">리뷰</a></li>              
+	              </ul>	            		      				
+			</div> 		
+		</div>
+	</nav>
 <body>
-	<div id="wrap">
-		<table>
-			<caption>회원추가 테이블</caption>
-			<colgroup>
-				<col width="100px"/>
-				<col width="*"/>
-			</colgroup>
-			<tbody>
-				<tr>
-					<th>
-						<label for="id">아이디:</label>
-					</th>
-					<td>
-						<input type="text" id="id" name="id"/>
-						<div id="box"></div>
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="pw">비밀번호:</label>
-					</th>
-					<td>
-						<input type="password" id="pw" name="pw"/>
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="name">이름:</label>
-					</th>
-					<td>
-						<input type="text" id="name" name="name"/>
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="email1">이메일:</label>
-					</th>
-					<td>
-						<input type="text" id="email1" name="email"/>
-						<label for="email2">@</label>
-						<input type="text" id="email2" name="email"/>
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="phone">연락처:</label>
-					</th>
-					<td>
-						<select name="phone" id="phone">
-							<option value="010">010</option>
-							<option value="011">011</option>
-							<option value="017">017</option>
-						</select>
-						<label for="phone2">-</label>
-						<input type="text" id="phone2" name="phone"/>
-						<label for="phone3">-</label>
-						<input type="text" id="phone3" name="phone"/>
-					</td>
-				</tr>
-			</tbody>
-			<tfoot>
-				<tr>
-					<td colspan="2">
-						<p class="btn">
-							<button id="btn_reg">저장</button>
-						</p>
-					</td>
-				</tr>
-			</tfoot>
-		</table>
+	<div class="container">
+		<div style="width: 300px; margin-right: auto; margin-left: auto;">	
+			<h2 class="form-signin-heading">Signup</h2>
+						
+			<div class="form-group has-success has-feedback">					
+			<label class="control-label sr-only" for="id"></label>		
+			<input class="form-control" type="text" id="id" name="id" placeholder="ID" required autofocus aria-describedby="inputSuccess4Status"/>			
+			<span id="inputSuccess5Status" class="sr-only">(success)</span>						
+			<div id="idcheck_box"></div>
+			</div>
+			<br/>	
+				
+			<div class="form-group">
+			<label class="sr-only" for="pw">PW</label>	
+			<input class="form-control" type="password" id="pw" name="pw" placeholder="PASSWORD" required/>
+			</div>
+			<br/>	
+			
+			<div class="form-group">
+			<label class="sr-only"for="name">NAME</label>		
+			<input class="form-control" type="text" id="name" name="name" placeholder="NAME" required autofocus/>
+			</div>
+			<br/>
+			
+			<form class="form-inline">
+			<div class="form-group">
+				<label class="sr-only" for="email1">EMAIL</label>		
+				<input class="form-control" type="text" id="email" name="email" placeholder="EMAIL" required autofocus style="width: 125px"/>
+				<label class="table_lable" for="email2">@</label>
+					<select name="email" id="email2" class="form-control">
+						<option value="naver.com">naver.com</option>
+						<option value="hanmail.net">hanmail.net</option>
+						<option value="google.com">google.com</option>
+					</select>
+			</div>
+			</form>
+			<br/>
+			
+			<form class="form-inline">
+			<div class="form-group">
+				<label class="sr-only" for="email1">PHONE</label>
+				<select name="phone" id="phone" class="form-control">
+				<option value="010">010</option>
+				<option value="011">011</option>
+				<option value="017">017</option>
+			</select>		
+			<label for="phone2">-</label>			
+			<input class="form-control" style="width: 85px" type="text" id="phone2" name="phone" placeholder="phone"/>
+			<label for="phone3">-</label>
+			<input class="form-control"  style="width: 85px" type="text" id="phone3" name="phone" placeholder="phone"/>	
+			</div>
+			</form>
+			<br/>			
+			
+			<input type="button" class="btn btn-lg btn-primary btn-block" id="btn_reg" value="회원가입"/>			
+			
+		</div>
 	</div>
-	
+	<footer class="footer">
+      <div class="container">
+        <p class="text-muted">Place sticky footer content here.</p>
+      </div>
+    </footer>
+	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery-3.4.1.min.js"></script>
-	<script>
+	<script src="js/bootstrap.min.js"></script>
+	<script>		
 		$(function(){
 			
 			$("#id").bind("keyup",function(){
@@ -161,7 +126,7 @@
 								+"&id="+encodeURIComponent(str) //보내고자하는 파라미터
 					}).done(function(data){
 						//도착함수  : 성공시
-						$("#box").html(data);
+						$("#idcheck_box").html(data);
 						//data에	<pre id="chk" class="success">사용가능</pre>온다.
 						//data에	<pre id="chk" class="fail">사용불가</pre>온다.
 					
@@ -172,7 +137,7 @@
 					//사용자가 입력한 id값 길이가
 					//4자 미만일 때 아이디가 box인 요소에
 					//쓰여진 값을 삭제
-					$("#box").html("");
+					$("#idcheck_box").html("");
 				}
 			});
 			

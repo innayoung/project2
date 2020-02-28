@@ -8,68 +8,35 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/jquery-ui.min.css"/>
-<link rel="stylesheet" href="css/styles.css"/>
-<link rel="stylesheet" href="css/fontawesome/all.min.css"/>
 <link rel="stylesheet" href="css/bootstrap.min.css" />
 <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
-<style type="text/css">	
-	 	/* list */
- 	caption{
-		display: none;
-	}
-	table tbody th{
-		width: 150px;
-		font-size: 15px;
-		color: black;
-	}
-	table tbody td{
-		font-size: 15px;
-		color: #99999;
-		text-align: center;
-	}
-	.card-header{
-		text-align: center;
-		font: 30px bold;
-	}
-	div.form-group{
-		margin: 0;
-		padding: 0;
-	}
-	div.card-body{
-		padding: 0;
-	}
-	.center-block {
-	  display: block;
-	  margin-left: auto;
-	  margin-right: auto;
-	}			
-	.no {width:15%; font-size: 15px}
-	.subject {width:30%; font-size: 15px}
-	.writer {width:20%; font-size: 15px}
-	.reg {width:20%; font-size: 15px}
-	.hit {width:15%; font-size: 15px}
-	.title{background:lightsteelblue}
-	
-	.odd {background:silver}	
-	body { padding-top: 120px; }
-	table thead th{color: black; text-align: center;}
-		
-</style>
+<link rel="stylesheet" href="css/custom.css"/>
 </head>
-	<!-- 상단영역 시작 -->
-	<nav class="navbar navbar-default navbar-fixed-top">
+	<!-- nav bar -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<div class="navbar-header">      
-		      	<a class="navbar-brand" href="#">Brand</a>
-	          	<a class="navbar-brand" href="control?type=Notice">공지사항</a>
-				<a class="navbar-brand" href="control?type=Overseas">해외패키지</a>
-				<a class="navbar-brand" href="control?type=Domestic">국내패키지</a>
-				<a class="navbar-brand" href="control?type=Free">자유여행</a>
-				<a class="navbar-brand" href="control?type=Review">리뷰</a>				
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	              </button>
+	              <a class="navbar-brand" href="#">HOME</a>
+              </div> 
+	              <div id="navbar" class="navbar-collapse collapse">
+	              <ul class="nav navbar-nav">
+	                <li><a href="control?type=Notice">공지사항</a></li>
+	                <li><a href="control?type=Overseas">해외패키지</a></li>
+	                <li><a href="control?type=Domestic">국내패키지</a></li>
+	                <li><a href="control?type=Free">자유여행</a></li>
+	                <li><a href="control?type=Review">리뷰</a></li>              
+	              </ul>	            		      				
 			</div> 		
 		</div>
 	</nav>
 <body>
+	<div class="container">
 	<div id="bbs" class="container-md themed-container center-block">
 	<div class="card-header">
 		게시판
@@ -148,7 +115,7 @@
 %>
                               </ul>
                           </td>
-						  <td>
+						  <td style="text-align: right;">
 							<input type="button" value="글쓰기" class="btn btn-primary"
 			onclick="javascript:location.href='control?type=write'"/>
 						  </td>
@@ -213,6 +180,13 @@
 			</tbody>
 		</table>
 	</div>
+	</div>
+	<footer class="footer">
+      <div class="container">
+        <p class="text-muted">Place sticky footer content here.</p>
+      </div>
+    </footer>
+	<script src="js/bootstrap.min.js"></script>
 </body>
 </html>
     
