@@ -8,6 +8,7 @@
 	Object obj = request.getAttribute("vo");
 
 	String b_idx = null;
+	String c_idx = null;
 %>
 <!DOCTYPE html>
 <html>
@@ -17,9 +18,8 @@
 <link rel="stylesheet" href="css/jquery-ui.min.css"/>
 <link rel="stylesheet" href="css/styles.css"/>
 <link rel="stylesheet" href="css/fontawesome/all.min.css"/>
-<link rel="stylesheet" href="css/custom.css"/>
-<link rel="stylesheet" href="css/sb-admin-2.min.css" />
-<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous"/>
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
 <style>
 	caption{
 		display: none;
@@ -43,10 +43,7 @@
 	#del_win{
 		display: none;
 	}
-	div.form-group{
-		margin: 0;
-		padding: 0;
-	}
+	
 	div.card-body{
 		padding: 0;
 	}
@@ -54,11 +51,24 @@
 	  display: block;
 	  margin-left: auto;
 	  margin-right: auto;
-	}
-	input#pw{margin: 5px; margin-left: 0;}
-	button{margin-top: 5px}			
+	}	
+	body { padding-top: 120px; }	
+	pre{ height: 300px}			
 </style>
 </head>
+<!-- 상단영역 시작 -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">      
+		      	<a class="navbar-brand" href="#">Brand</a>
+	          	<a class="navbar-brand" href="control?type=Notice">공지사항</a>
+				<a class="navbar-brand" href="control?type=Overseas">해외패키지</a>
+				<a class="navbar-brand" href="control?type=Domestic">국내패키지</a>
+				<a class="navbar-brand" href="control?type=Free">자유여행</a>
+				<a class="navbar-brand" href="control?type=Review">리뷰</a>				
+			</div> 		
+		</div>
+	</nav>
 <body>
 <%
 	if(obj != null){
@@ -149,12 +159,15 @@
 		List<CommVO> c_list = vo.getC_list();
 
 		for(CommVO cvo:c_list){
+			c_idx = cvo.getC_idx();
 %>	
 		<div>
 			이름: <%=cvo.getWriter() %> &nbsp;&nbsp;
 			날짜: <%=cvo.getWrite_date() %><br/>
 			내용: <%=cvo.getContent() %>
 		</div>
+		<button  class="btn_cidx" name="btn_cidx" 
+			onclick="btn_commedit('<%= c_idx %>')">Edit</button>
 		<hr/>
 <%
 		}//for의 끝
@@ -186,12 +199,31 @@
 	</div>
 	</div>
 	
+	<!-- 댓글 수정창 -->
+	<div id="cedit_win" >	
+		<form class="ce_form1">	
+		<div class="form-group">	
+			<textarea class="form-control" rows="4" cols="80" name="content"placeholder="Add comment"
+			id="cedit_content10" ></textarea><br/>
+		</div>
+		</form>	
+		<form class="ce_form2">
+			<label ></label>
+			<input type="text" class="form-control" name="writer" placeholder="Enter writer name"
+			id="cedit_writer" />&nbsp;&nbsp;
+			<input type="password" class="form-control" name="pwd" placeholder="Password"
+			id="cedit_pwd" />&nbsp;&nbsp;
+			
+			<input type="button" class="cedit_btn" value="저장" id="cedit_btn"/> 
+		</form>
+	</div>
+	
 	<script src="js/jquery-3.4.1.min.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
 	<script>
+	var edit_cidx = 0;
 	
 		$(function(){
-			
 			// 코멘트 추가
 			$("#save_btn").bind("click",function(){
 				
@@ -224,6 +256,7 @@
 						
 						msg += "내용: "+ data[i].content +"";
 						msg += "</div>";
+						msg += "<button class=\"btn_cidx\" name=\"btn_cidx\" onclick=\"btn_commedit('"+data[i].c_idx+"')\">Edit</button>";
 						msg += "<hr/>";
 					}
 					$("#Comm_reg").html(msg);
@@ -235,22 +268,79 @@
 			});
 			
 			$("#del_btn").bind("click",function(){
-				$("#del_win").css("display","block");
 				$("#del_win").dialog();
 			});
 			
 			$("#close_bt").bind("click",function(){
-				
 				$("#del_win").dialog("close");
 			});
 			
 			$("#delete_bt").bind("click",function(){
 				var b_idx = $("#b_idx").val();
-				var pw = $("#pw").val();
+				var pwd = $("#pw").val();
 				var cPage = $("#cPage").val();
 				
-				var param = "type=del&b_idx="+encodeURIComponent(b_idx)+
-					"&pw="+encodeURIComponent(pw);
+				var param = "type=delBbs&b_idx="+encodeURIComponent(b_idx)+
+							"&pwd="+encodeURIComponent(pwd);
+				
+				$.ajax({
+					url: "control",
+					type: "post",
+					data: param,
+					dataType: "json"
+				}).done(function(data){
+					if(data.value == "ok"){
+						alert("삭제되었습니다.");
+						location.href = "control?type=list&cPage=${cPage }";
+					}else{						
+						alert("비밀번호가 다릅니다.");
+					}
+				}).fail(function(err){
+					
+				});
+			});
+			
+			
+			// 코멘트 수정 - 수정
+			// $(".btn_cidx").bind("click",function(){	});
+			
+			
+			// 코멘트 수정 - 저장
+			$(".cedit_btn").bind("click",function(){
+				
+				$("#cedit_win").dialog("close");
+				
+				
+				
+				var writer = $("#cedit_writer").val().trim();
+				var content = $("#cedit_content10").val().trim();
+				var pwd = $("#cedit_pwd").val().trim();
+				var c_idx = edit_cidx;
+				var b_idx = <%=b_idx%>;
+				
+				//유효성 검사
+				if(pwd.length < 1){
+					alert("비밀번호를 입력하세요!");
+					$("#pwd").focus();
+					return;
+				}
+				if(writer.length < 1){
+					alert("글쓴이를 입력하세요!");
+					$("#writer").focus();
+					return;
+				}
+				if(content.length < 1){
+					alert("내용을 입력하세요!");
+					$("#content").focus();
+					return;
+				}
+				
+				var param = "type=editComm"+
+							"&writer="+encodeURIComponent(writer)+
+							"&content="+encodeURIComponent(content)+
+							"&pwd="+encodeURIComponent(pwd)+
+							"&c_idx="+encodeURIComponent(c_idx)+
+							"&b_idx="+encodeURIComponent(b_idx);
 				
 				$.ajax({
 					url: "control",
@@ -259,15 +349,25 @@
 					dataType: "json"
 				}).done(function(data){
 					
-					if(data.value == "true")
-						location.href = "control?type=list&cPage=${cPage }";
-					else{						
-						alert("비밀번호가 다릅니다.");
+					var msg = "";
+					for(var i=0; i<data.length; i++){
+						msg += "<div>";
+						msg += "이름: "+ data[i].writer +"&nbsp;&nbsp;";
+						if(data[i].write_date != null)
+							msg += "날짜: "+ data[i].write_date +"<br/>";
+						else
+							msg += "날짜: 2020-00-00 24:00:00.0<br/>";
+						
+						msg += "내용: "+ data[i].content +"";
+						msg += "</div>";
+						msg += "<button class=\"btn_cidx\" name=\"btn_cidx\" onclick=\"btn_commedit('"+data[i].c_idx+"')\">Edit</button>";
+						msg += "<hr/>";
 					}
-				}).fail(function(err){
+					$("#Comm_reg").html(msg);
 					
+				}).fail(function(err){
+					console.log(err);
 				});
-				
 			});
 		});
 	
@@ -289,6 +389,12 @@
 		function edit(){
 			document.frm.type.value = "edit";
 			document.frm.submit();
+		}
+		
+		function btn_commedit(c_id) {
+			edit_cidx = c_id;
+			console.log(edit_cidx);
+			$("#cedit_win").dialog();
 		}
 	</script>
 </body>

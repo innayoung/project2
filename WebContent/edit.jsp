@@ -7,32 +7,40 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="css/jquery-ui.min.css"/>
+<link rel="stylesheet" href="css/styles.css"/>
+<link rel="stylesheet" href="css/fontawesome/all.min.css"/>
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
 <style type="text/css">
-	#bbs table {
-	    width:580px;
-	    margin-left:10px;
-	    border:1px solid black;
-	    border-collapse:collapse;
-	    font-size:14px;
-	    
+	caption{
+		display: none;
 	}
-	
-	#bbs table caption {
-	    font-size:20px;
-	    font-weight:bold;
-	    margin-bottom:10px;
+	table tbody th{
+		width: 150px;
+		font-size: 15px;
+		color: black;
 	}
-	
-	#bbs table th {
-	    text-align:center;
-	    border:1px solid black;
-	    padding:4px 10px;
+	table tbody td{
+		font-size: 15px;
+		color: #99999;
 	}
-	
-	#bbs table td {
-	    text-align:left;
-	    border:1px solid black;
-	    padding:4px 10px;
+	.card-header{
+		text-align: center;
+		font: 30px bold;
+	}
+	.btn_area{
+		text-align: right;
+	}
+	#del_win{
+		display: none;
+	}
+	div.form-group{
+		margin: 0;
+		padding: 0;
+	}
+	div.card-body{
+		padding: 0;
 	}
 	
 	.no {width:15%}
@@ -40,14 +48,35 @@
 	.writer {width:20%}
 	.reg {width:20%}
 	.hit {width:15%}
-	.title{background:lightsteelblue}
 	
-	.odd {background:silver}
 	
-		
+	.odd {background:silver}	
+	.center-block {
+		  display: block;
+		  margin-left: auto;
+		  margin-right: auto;
+	}
+	.table{ 
+		padding: 0;
+		margin: 0;	
+	}
+	body { padding-top: 120px; }
 </style>
 <link rel="stylesheet" href="css/summernote-lite.css"/>
 </head>
+<!-- 상단영역 시작 -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">      
+		      	<a class="navbar-brand" href="#">Brand</a>
+	          	<a class="navbar-brand" href="control?type=Notice">공지사항</a>
+				<a class="navbar-brand" href="control?type=Overseas">해외패키지</a>
+				<a class="navbar-brand" href="control?type=Domestic">국내패키지</a>
+				<a class="navbar-brand" href="control?type=Free">자유여행</a>
+				<a class="navbar-brand" href="control?type=Review">리뷰</a>				
+			</div> 		
+		</div>
+	</nav>
 <body>
 <%
 	Object obj = request.getAttribute("vo");
@@ -55,31 +84,35 @@
 	if(obj != null){
 		BbsVO vo = (BbsVO)obj;
 %>
-	<div id="bbs">
+	<div id="bbs" class="container-md themed-container center-block">
+	<div class="card-header">
+		게시글 수정
+	</div>
+	<div class="card-body">
 	<form action="control?type=edit" method="post" 
 	encType="multipart/form-data">
 	
 		<input type="hidden" name="b_idx" value="${param.b_idx }"/>
 		<input type="hidden" name="cPage" value="${param.cPage }"/>
 	
-		<table summary="게시판 글쓰기">
+		<table summary="게시판 글쓰기" class="table table-bordered">
 			<caption>게시판 수정</caption>
 			<tbody>
 				<tr>
-					<th>제목:</th>
-					<td><input type="text" name="title" 
+					<th class="title_tr">제목:</th>
+					<td><input type="text" class="form-control" name="title" 
 						size="45" value="<%=vo.getSubject()%>"/></td>
 				</tr>
 				<tr>
-					<th>이름:</th>
-					<td><input type="text" name="writer"
+					<th class="title_tr">이름:</th>
+					<td><input type="text" class="form-control" name="writer"
 					 size="12" value="<%=vo.getWriter()%>"/></td>
 				</tr>
 			
 				<tr>
-					<th>첨부파일:</th>
+					<th class="title_tr">첨부파일:</th>
 					<td>
-						<input type="file" name="file"/>
+						<input type="file" class="form-control" name="file" id="file"/>
 					<%
 						if(vo.getFile_name() != null &&
 							vo.getFile_name().trim().length()>4){
@@ -91,32 +124,20 @@
 						
 					</td>
 				</tr>
-
 				<tr>
-					<th>비밀번호:</th>
-					<td><input type="password" name="pwd" size="12"/></td>
-				</tr>
-
-<%--
-				<tr>
-					<td colspan="2">
-						<input type="button" value="보내기"
-						onclick="sendData()"/>
-						<input type="button" value="다시"/>
-						<input type="button" value="목록"/>
-					</td>
-				</tr>
- --%>				
+					<th class="title_tr">비밀번호:</th>
+					<td><input type="password" class="form-control" name="pwd" size="12"/></td>
+				</tr>			
 			</tbody>
 		</table>
 		
 		<input type="hidden" name="content" id="str"/>
 	</form>
 
-		<table>
+		<table class="table table-bordered">
 			<tbody>
 				<tr>
-					<th style="width:83px;">내용:</th>
+					<th class="title_tr" style="width:150px;">내용:</th>
 					<td><textarea name="content" cols="50" 
 			rows="8" id="content"><%=vo.getContent() %></textarea>
 					</td>
@@ -134,6 +155,7 @@
 			</tbody>
 		</table>	
 	
+	</div>
 	</div>
 <%
 	}

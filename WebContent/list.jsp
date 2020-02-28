@@ -10,11 +10,11 @@
 <link rel="stylesheet" href="css/jquery-ui.min.css"/>
 <link rel="stylesheet" href="css/styles.css"/>
 <link rel="stylesheet" href="css/fontawesome/all.min.css"/>
-<link rel="stylesheet" href="css/custom.css"/>
-<link rel="stylesheet" href="css/sb-admin-2.min.css" />
-<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous"/>
-<style>
-	caption{
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+<style type="text/css">	
+	 	/* list */
+ 	caption{
 		display: none;
 	}
 	table tbody th{
@@ -50,55 +50,25 @@
 	.hit {width:15%; font-size: 15px}
 	.title{background:lightsteelblue}
 	
-	.odd {background:silver}
-	
-	/* paging */
-	
-	table tfoot ol.paging {
-	    list-style:none;
-	}
-	
-	table tfoot ol.paging li {
-	    float:left;
-	    margin-right:8px;
-	}
-	
-	table tfoot ol.paging li a {
-	    display:block;
-	    padding:3px 7px;
-	    border:1px solid #00B3DC;
-	    color:#2f313e;
-	    font-weight:bold;
-	}
-	
-	table tfoot ol.paging li a:hover {
-	    background:#00B3DC;
-	    color:white;
-	    font-weight:bold;
-	}
-	
-	.disable {
-	    padding:3px 7px;
-	    border:1px solid silver;
-	    color:silver;
-	}
-	
-	.now {
-	   padding:3px 7px;
-	    border:1px solid #ff4aa5;
-	    background:#ff4aa5;
-	    color:white;
-	    font-weight:bold;
-	}
-	
-	.empty{
-		height: 60px;
-	}
-	
-	thead th{color: black}
+	.odd {background:silver}	
+	body { padding-top: 120px; }
+	table thead th{color: black; text-align: center;}
 		
 </style>
 </head>
+	<!-- 상단영역 시작 -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">      
+		      	<a class="navbar-brand" href="#">Brand</a>
+	          	<a class="navbar-brand" href="control?type=Notice">공지사항</a>
+				<a class="navbar-brand" href="control?type=Overseas">해외패키지</a>
+				<a class="navbar-brand" href="control?type=Domestic">국내패키지</a>
+				<a class="navbar-brand" href="control?type=Free">자유여행</a>
+				<a class="navbar-brand" href="control?type=Review">리뷰</a>				
+			</div> 		
+		</div>
+	</nav>
 <body>
 	<div id="bbs" class="container-md themed-container center-block">
 	<div class="card-header">
@@ -117,38 +87,42 @@
 			</thead>
 			
 			<tfoot>
-                      <tr>
-                          <td colspan="4">
-                              <ol class="paging">
+				<tr>
+					<td colspan="4">
+						<ul class="pagination">
 <%
 	//페이징을 위해 request에 저장된 page객체를 얻어낸다.
 	Object obj = request.getAttribute("page");
 	Paging pvo = null;
 	if(obj != null){
 		pvo = (Paging)obj;
-		//startPage의 값은 항상 1,4,7,...형식이다.
-		//그러다보니 이전으로 가는 기능은
-		// startPage가 pagePerBlock보다 작을 때는 
-		//비활성화가 되어야 한다.
+		//이전버튼은 startPage가 pagePerBlock보다 작을 때는 비활성화가 되어야 한다.
 		if(pvo.getStartPage() < pvo.getPagePerBlock()){
 %>
-	<li class="disable">&lt;</li>
+	<li class="disabled">
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="false">&laquo;</span>
+      </a>
+    </li>
 <%		
 		}else{ //활성화
 %>
-	<li><a href="control?type=list&cPage=<%=pvo.getNowPage()-pvo.getPagePerBlock()%>">&lt;</a></li>
+	<li>
+		<a href="control?type=list&cPage=<%=pvo.getNowPage()-pvo.getPagePerBlock()%>" aria-label="Previous">
+			<span aria-hidden="true">&laquo;</span>
+		</a>
+	</li>
 <%		
 		}
-	
 		for(int i=pvo.getStartPage(); i<=pvo.getEndPage(); i++){
 		
 			if(pvo.getNowPage() == i){
 %>
-	<li class="now"><%=i %></li>
+	<li class="active"><a href="#"><%=i %><span class="sr-only"></span></a></li>
 <%			
 			}else{
 %>
-	<li><a href="control?type=list&cPage=<%=i%>"><%=i %></a></li>
+	<li><a href="control?type=list&cPage=<%=i%>"><%=i %><span class="sr-only"></span></a></li>
 <%		
 			}//if문의 끝
 		}//for문의 끝
@@ -157,16 +131,22 @@
 	//endPage가 totalPage보다 작을 경우에만 활성화!
 		if(pvo.getEndPage() < pvo.getTotalPage()){
 %>
-	<li><a href="control?type=list&cPage=<%=pvo.getNowPage()+pvo.getPagePerBlock()%>">&gt;</a></li>	
+	<li><a href="control?type=list&cPage=<%=pvo.getNowPage()+pvo.getPagePerBlock()%>" aria-label="Next">
+		 <span aria-hidden="true">&raquo;</span></a>
+	</li>	
 <%		
 		}else{
 %>
-	<li class="disable">&gt;</li>
+	<li class="disabled">
+     <a href="#" aria-label="Next">
+        <span aria-hidden="false">&raquo;</span>
+      </a>
+    </li>
 <%		
 		}
 	}
 %>
-                              </ol>
+                              </ul>
                           </td>
 						  <td>
 							<input type="button" value="글쓰기" class="btn btn-primary"
@@ -180,59 +160,58 @@
 	BbsVO[] ar = null;
 	Object ar_obj = request.getAttribute("ar");
 	
-	if(ar_obj != null){
-	
-		ar = (BbsVO[])ar_obj;
+		if(ar_obj != null){
+		
+			ar = (BbsVO[])ar_obj;
 		
 		
-		int i = 0; //앞에 번호를 만들기 위해 필요한 변수
-		
-		for(BbsVO vo : ar){
-			int num = pvo.getTotalRecord()-
-				((pvo.getNowPage()-1)*pvo.getNumPerPage()+i);	
+			int i = 0; //앞에 번호를 만들기 위해 필요한 변수
+			
+			for(BbsVO vo : ar){
+				int num = pvo.getTotalRecord()-
+					((pvo.getNowPage()-1)*pvo.getNumPerPage()+i);	
 %>			
-		<tr>
-			<td><%=num %></td>
-			<td style="text-align: left">
-				<a href="control?type=view&cPage=<%=pvo.getNowPage()%>&b_idx=<%=vo.getB_idx()%>">
-					<%=vo.getSubject() %>
-					<%
-						if(vo.getC_list().size() > 0){
-					%>
-						(<%=vo.getC_list().size() %>)
-					<%		
-						}
-					%>	
-				</a>
+				<tr>
+					<td><%=num %></td>
+					<td style="text-align: left">
+						<a href="control?type=view&cPage=<%=pvo.getNowPage()%>&b_idx=<%=vo.getB_idx()%>">
+							<%=vo.getSubject() %>
+							<%
+								if(vo.getC_list().size() > 0){
+							%>
+								(<%=vo.getC_list().size() %>)
+							<%		
+								}
+							%>	
+						</a>
 				
 				
-			</td>
-			<td><%=vo.getWriter() %></td>
-			<td>
-			<%
+					</td>
+					<td><%=vo.getWriter() %></td>
+					<td>
+<%
 				if(vo.getWrite_date() != null)
 					out.println(vo.getWrite_date().substring(0,10));
-			%>	
-			</td>
-			<td><%=vo.getHit() %></td>
-		</tr>
+%>	
+					</td>
+					<td><%=vo.getHit() %></td>
+				</tr>
 <%
 			++i;
 		}//for의 끝
 		
 	}else{
 %>
-		<tr>
-			<td colspan="5" class="empty">
-				등록된 게시물이 없습니다.
-			</td>
-		</tr>
+				<tr>
+					<td colspan="5" class="empty">
+						등록된 게시물이 없습니다.
+					</td>
+				</tr>
 <%		
 	}
 %>
 			</tbody>
 		</table>
-		
 	</div>
 </body>
 </html>

@@ -34,4 +34,13 @@
 		values(Project_comment_t_seq.NEXTVAL, #{writer}, #{content}, #{pwd}, sysdate, #{ip}, #{b_idx})
 	</insert>
 	
+	<!-- 댓글 수정 -->
+	<update id="edit_comm" parameterType="java.util.Map">
+		UPDATE Project_comment_t
+		SET writer = #{writer},
+			content = #{content},
+			ip = #{ip}
+		WHERE c_idx = #{c_idx} AND pwd = #{pwd}
+	</update>
+	
 </mapper>

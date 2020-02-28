@@ -2,6 +2,7 @@ package bbs.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import mybatis.dao.MemDAO;
 import mybatis.vo.MemVO;
@@ -15,7 +16,9 @@ public class loginAction implements Action {
 		
 		MemVO vo = MemDAO.login_member(id, pw);
 		
-		request.setAttribute("mem_vo", vo);
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("mem_vo", vo);
 		
 		return "/main.jsp";
 	}

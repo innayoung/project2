@@ -9,10 +9,9 @@
 <link rel="stylesheet" href="css/jquery-ui.min.css"/>
 <link rel="stylesheet" href="css/styles.css"/>
 <link rel="stylesheet" href="css/fontawesome/all.min.css"/>
-<link rel="stylesheet" href="css/custom.css"/>
-<link rel="stylesheet" href="css/sb-admin-2.min.css" />
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
 <link rel="stylesheet" href="css/summernote-lite.css"/>
-<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous"/>
 <style>
 	caption{
 		display: none;
@@ -60,9 +59,23 @@
 	.table{ 
 		padding: 0;
 		margin: 0;	
-	}		
+	}
+	body { padding-top: 120px; }	
 </style>
 </head>
+<!-- 상단영역 시작 -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">      
+		      	<a class="navbar-brand" href="#">Brand</a>
+	          	<a class="navbar-brand" href="control?type=Notice">공지사항</a>
+				<a class="navbar-brand" href="control?type=Overseas">해외패키지</a>
+				<a class="navbar-brand" href="control?type=Domestic">국내패키지</a>
+				<a class="navbar-brand" href="control?type=Free">자유여행</a>
+				<a class="navbar-brand" href="control?type=Review">리뷰</a>				
+			</div> 		
+		</div>
+	</nav>
 <body>
 	<div id="bbs" class="container-md themed-container center-block">
 	<div class="card-header">
@@ -110,8 +123,9 @@
 					<td colspan="2">
 						<input type="button" value="보내기"
 						onclick="sendData()" class="btn btn-primary"/>
-						<input type="button" value="다시" class="btn btn-primary"/>
-						<input type="button" value="목록" class="btn btn-primary"/>
+						<input type="button" value="다시" id="reset_btn" class="btn btn-primary"/>
+						<input type="button" value="목록" class="btn btn-primary"
+						onclick="location.href='control?type=list'"	/>
 					</td>
 				</tr>
 			</tbody>
@@ -147,6 +161,13 @@
 			});
 			
 			$("#content").summernote("lineHeight", 1.0);
+			
+			
+			$("#reset_btn").bind("click",function(){
+				document.forms[0].reset();
+				$("#content").summernote("reset");
+				$("#str").val("");
+			});
 		});
 		
 		function sendFile(file, editor){

@@ -56,6 +56,31 @@ public class CommDAO {
 		return chk;
 	}
 	
+	public static boolean edit_comm(String c_idx, String ip, String pwd, String writer, String content) {
+		
+		boolean chk = false;
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("c_idx", c_idx);
+		map.put("content", content);
+		map.put("pwd", pwd);
+		map.put("writer", writer);
+		map.put("ip", ip);
+						
+		SqlSession ss = FactoryService.getFactory().openSession();
+		int cnt = ss.update("comm.edit_comm", map);
+		
+		if(cnt > 0) {
+			chk = true;
+			ss.commit();
+		}else {
+			ss.rollback();
+		}
+		ss.close();
+		
+		return chk;
+	}
+	
 	// 댓글 수정 기능
 	
 	/*

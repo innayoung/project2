@@ -5,7 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	Object obj_M = request.getAttribute("mem_vo");
+	Object obj_M = session.getAttribute("mem_vo");
 
 	MemVO mvo = null;
 	

@@ -77,6 +77,7 @@
 		UPDATE Project_bbs_t
 		SET
 			subject = #{subject},
+			writer = #{writer},
 			content = #{content}
 			<if test="fname != null">
 				,file_name = #{fname}
@@ -84,4 +85,12 @@
 			</if>
 		WHERE b_idx = #{b_idx} AND pwd = #{pwd}
 	</update>
+	
+	<!-- 게시글 삭제 -->
+	<update id="del_bbs">
+		UPDATE Project_bbs_t
+		set status = 1
+		WHERE b_idx = #{b_idx} AND pwd = #{pwd}
+	</update>
+	
 </mapper>

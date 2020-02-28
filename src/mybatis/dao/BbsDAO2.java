@@ -65,19 +65,18 @@ public class BbsDAO2 {
 		
 		return value;
 	}
-/*
+
 	// 게시글 삭제 (b_idx와 pw를 받아 처리)
-	public static boolean delBbs_ov(String b_idx, String pw) {
+	public static boolean del_Bbs(String b_idx, String pw) {
 		boolean value = false;
 		
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("no", b_idx);
+		map.put("b_idx", b_idx);
 		map.put("pwd", pw);
 		
-		SqlSession ss = 
-			FactoryService.getFactory().openSession();
+		SqlSession ss = FactoryService.getFactory().openSession();
 		
-		int cnt = ss.update("bbs.",map);
+		int cnt = ss.update("bbs2.del_bbs",map);
 		if(cnt > 0) {
 			ss.commit();
 			value = true;
@@ -88,7 +87,7 @@ public class BbsDAO2 {
 		
 		return value;
 	}
-*/	
+
 
 	// 게시글 수정
 	public static boolean edit_bbs(String b_idx, String title, 
@@ -100,9 +99,9 @@ public class BbsDAO2 {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("b_idx", b_idx);
 		map.put("subject", title);
+		map.put("writer", writer);
 		map.put("content", content);
 		map.put("pwd", pwd);
-		map.put("ip", ip);
 		
 		if(fname != null && fname.trim().length() > 0) {
 			map.put("fname", fname);
