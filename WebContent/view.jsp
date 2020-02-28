@@ -9,6 +9,7 @@
 
 	String b_idx = null;
 	String c_idx = null;
+	
 %>
 <!DOCTYPE html>
 <html>
